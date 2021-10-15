@@ -2,7 +2,8 @@
 # Layth Yassin 
 # Professor Sokolov
 
-from sqlalchemy import create_engine, Integer, String, Column, DateTime, ForeignKey, PrimaryKeyConstraint, func
+from sqlalchemy import create_engine, Integer, String, Column, DateTime, ForeignKey, PrimaryKeyConstraint, func, and_
+from sqlalchemy import orm
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import backref, relationship, sessionmaker
 from sqlalchemy.orm.session import Session
@@ -60,29 +61,43 @@ conn = engine.connect()
 Session = sessionmaker(bind=engine)
 session = Session()
 
-def test_1():
+def test1():
     orm_q = session.query(func.count(Boat.bid), Boat.bid, Boat.bname).join(Reservation).group_by(Boat.bid).all()
     sql_q = conn.execute("SELECT COUNT(B.bid), B.bid, B.bname FROM boats B, reserves R WHERE B.bid = R.bid GROUP BY bid").fetchall()
     assert orm_q == sql_q
 
-# def test2():
-#     orm_q = session.query(Reservation.sid)
-#     sql_q = conn.execute("SELECT R.sid FROM sailors S, reserves R, boats B WHERE S.sid = R.sid AND B.bid = R.bid AND B.color = 'red' GROUP BY R.sid HAVING COUNT(R.sid) = (SELECT COUNT(*) AS numReds FROM boats B WHERE B.color = 'red')")
-#     assert orm_q == sql_q
+def test2():
+    sub = session.query(func.count(Boat.bid).label("numReds")).filter(Boat.color == "red").scalar()
+    orm_q = session.query(Reservation.sid).join(Sailor).join(Boat).filter(Boat.color == "red") \
+        .group_by(Reservation.sid).having(func.count(Reservation.sid) == sub).all()
+    sql_q = conn.execute("SELECT R.sid FROM sailors S, reserves R, boats B WHERE S.sid = R.sid AND B.bid = R.bid AND B.color = 'red' \
+        GROUP BY R.sid HAVING COUNT(R.sid) = (SELECT COUNT(*) AS numReds FROM boats B WHERE B.color = 'red')").fetchall()
+    assert orm_q == sql_q
 
-# def test3():
-#     orm_q =
-#     sql_q = conn.execute("SELECT S.sid, S.sname FROM sailors S WHERE S.sid IN (SELECT S.sid FROM sailors S, reserves R, boats B WHERE S.sid = R.sid AND R.bid = B.bid AND B.color = 'red') AND S.sid NOT IN (SELECT S.sid FROM sailors S, reserves R, boats B WHERE S.sid = R.sid AND R.bid = B.bid AND B.color != 'red')")
-#     assert orm_q == sql_q
+def test3():
+    sub1 = session.query(Sailor.sid).join(Reservation).join(Boat).filter(Boat.color == "red")
+    sub2 = session.query(Sailor.sid).join(Reservation).join(Boat).filter(Boat.color != "red")
+    orm_q = session.query(Sailor.sid, Sailor.sname).filter(and_(Sailor.sid.in_(sub1), Sailor.sid.not_in(sub2))).all()
+    sql_q = conn.execute("SELECT S.sid, S.sname FROM sailors S WHERE S.sid IN \
+        (SELECT S.sid FROM sailors S, reserves R, boats B WHERE S.sid = R.sid AND R.bid = B.bid AND B.color = 'red') \
+            AND S.sid NOT IN (SELECT S.sid FROM sailors S, reserves R, boats B WHERE S.sid = R.sid AND R.bid = B.bid AND B.color != 'red')").fetchall()
+    assert orm_q == sql_q
 
-# def test4():
-#     # orm_q =
-#     sql_q = conn.execute("SELECT numRes, bid FROM (SELECT COUNT(*) AS numRes, B.bid FROM boats B, reserves R WHERE B.bid = R.bid GROUP BY R.bid) AS freqTab WHERE numRes = (SELECT MAX(numRes) FROM (SELECT COUNT(*) AS numRes, B.bid FROM boats B, reserves R WHERE B.bid = R.bid GROUP BY R.bid) AS freqTab2)")
+def test4():
+    sub1 = session.query(func.count(Boat.bid).label("numRes"), Boat.bid).join(Reservation).group_by(Reservation.bid).subquery()
+    sub2 = session.query(func.max(sub1.c.numRes)).scalar()
+    orm_q = session.query(sub1.c.numRes, sub1.c.bid).filter(sub1.c.numRes == sub2).all()
+    sql_q = conn.execute("SELECT numRes, bid FROM (SELECT COUNT(*) AS numRes, B.bid FROM boats B, reserves R WHERE B.bid = R.bid GROUP BY R.bid) \
+        AS freqTab WHERE numRes = (SELECT MAX(numRes) FROM (SELECT COUNT(*) AS numRes, B.bid FROM boats B, \
+            reserves R WHERE B.bid = R.bid GROUP BY R.bid) AS freqTab2)").fetchall()
+    assert orm_q == sql_q
 
-# def test5():
-#     orm_q =
-#     sql_q = conn.execute("SELECT S.sid, S.sname FROM sailors S WHERE S.sid NOT IN (SELECT S.sid FROM sailors S, reserves R, boats B WHERE S.sid = R.sid AND R.bid = B.bid AND B.color = 'red')")
-#     assert orm_q == sql_q
+def test5():
+    sub = session.query(Reservation.sid).join(Boat).filter(Boat.color == "red")
+    orm_q = session.query(Sailor.sid, Sailor.sname).filter(Sailor.sid.not_in(sub)).all()
+    sql_q = conn.execute("SELECT S.sid, S.sname FROM sailors S WHERE S.sid NOT IN \
+        (SELECT R.sid FROM reserves R, boats B WHERE R.bid = B.bid AND B.color = 'red')").fetchall()
+    assert orm_q == sql_q
 
 def test6():
     orm_q = session.query(func.avg(Sailor.age)).filter(Sailor.rating == 10).all()
@@ -90,12 +105,19 @@ def test6():
     assert orm_q == sql_q
 
 def test7():
-    sub_q = session.query(func.min(Sailor.age)).join(Sailor).group_by(Sailor.rating)
-    orm_q = session.query(Sailor.sname, Sailor.sid, Sailor.rating, Sailor.age).join(Sailor).filter(Sailor.age.in_(sub_q)).all()
-    sql_q = conn.execute("SELECT S.sname, S.sid, S.rating, S.age FROM sailors S WHERE S.age IN (SELECT MIN(S.age) FROM sailors S GROUP BY S.rating)").fetchall()
+    sub_q = session.query(Sailor.rating, func.min(Sailor.age).label('minAge')).group_by(Sailor.rating).subquery()
+    orm_q = session.query(Sailor.sname, Sailor.sid, Sailor.rating, Sailor.age).filter(and_(Sailor.age == sub_q.c.minAge, \
+        Sailor.rating == sub_q.c.rating)).all()
+    sql_q = conn.execute("SELECT S.sname, S.sid, S.rating, S.age FROM sailors S WHERE S.age IN \
+        (SELECT MIN(S.age) FROM sailors S GROUP BY S.rating)").fetchall()
     assert orm_q == sql_q
 
-# def test8():
-#     orm_q =
-#     sql_q = conn.execute("SELECT sid, sname, bid, numRes FROM (SELECT sid, sname, bid, numRes, RANK() OVER (PARTITION BY bid ORDER BY numRes DESC) AS ranking FROM (SELECT S.sid, S.sname, B.bid, COUNT(*) AS numRes FROM sailors S, reserves R, boats B WHERE B.bid = R.bid AND S.sid = R.sid GROUP BY B.bid, S.sid) AS tmp1) AS tmp2 WHERE ranking = 1")
-#     assert orm_q == sql_q
+def test8():
+    sub1 = session.query(Sailor.sid, Sailor.sname, Boat.bid, func.count(Boat.bid).label("numRes")).filter(Reservation.sid == Sailor.sid, Reservation.bid == Boat.bid).group_by(Boat.bid, Sailor.sid).subquery()
+    sub2 = session.query(sub1.c.sid, sub1.c.sname, sub1.c.bid, sub1.c.numRes, func.rank().over(partition_by=sub1.c.bid, order_by=sub1.c.numRes.desc()).label("ranking")).subquery()
+    orm_q = session.query(sub2.c.sid, sub2.c.sname, sub2.c.bid, sub2.c.numRes).filter(sub2.c.ranking == 1).all()
+    sql_q = conn.execute("SELECT sid, sname, bid, numRes FROM \
+        (SELECT sid, sname, bid, numRes, RANK() OVER (PARTITION BY bid ORDER BY numRes DESC) AS ranking FROM \
+            (SELECT S.sid, S.sname, B.bid, COUNT(*) AS numRes FROM sailors S, reserves R, boats B \
+                WHERE B.bid = R.bid AND S.sid = R.sid GROUP BY B.bid, S.sid) AS tmp1) AS tmp2 WHERE ranking = 1").fetchall()
+    assert orm_q == sql_q
