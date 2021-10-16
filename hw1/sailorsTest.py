@@ -3,13 +3,9 @@
 # Professor Sokolov
 
 from sqlalchemy import create_engine, Integer, String, Column, DateTime, ForeignKey, PrimaryKeyConstraint, func, and_
-from sqlalchemy import orm
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import backref, relationship, sessionmaker
 from sqlalchemy.orm.session import Session
-from sqlalchemy.sql.selectable import subquery
-# import pymysql
-# import pytest
 
 Base = declarative_base()
 
@@ -51,6 +47,47 @@ class Boat(Base):
     def __repr__(self):
         return "<Boat(id=%s, name='%s', color=%s)>" % (self.bid, self.bname, self.color)
 
+class Employee(Base):
+    __tablename__ = 'employees'
+
+    eid = Column(Integer, primary_key=True)
+    ename = Column(String)
+    job = Column(String)
+
+    def __repr__(self):
+        return "<Employee(eid=%s, name=%s, job=%s)>" % (self.eid, self.ename, self.job)
+
+class Address(Base):
+    __tablename__ = 'addresses'
+
+    aid = Column(Integer, primary_key=True)
+    eid = Column(Integer, ForeignKey('employees.eid'))
+    zip = Column(Integer)
+    line1 = Column(String)
+    line2 = Column(String)
+    city = Column(String)
+
+    employee = relationship('Employee')
+
+    def __repr__(self):
+        return "<Address(aid=%s, eid=%s, line1=%s, line2=%s, city=%s, zip=%s)>" % (self.aid, self.eid, self.line1, self.line2, self.city, self.zip)
+
+class Salary(Base):
+    __tablename__ = 'salaries'
+
+    salid = Column(Integer, primary_key=True)
+    eid = Column(Integer, ForeignKey('employees.eid'))
+    weeklyhrs = Column(Integer)
+    hourlypay = Column(Integer)
+    overtimehrs = Column(Integer)
+    overtimepay = Column(Integer)
+
+    employee = relationship('Employee')
+
+    def __repr__(self):
+        return "<Salary(salid=%s, eid=%s, weeklyhrs=%s, hourlypay=%s, overtimehrs=%s, overtimepay=%s)>" \
+            % (self.salid, self.eid, self.weeklyhrs, self.hourlypay, self.overtimehrs, self.overtimepay)
+
 engine = create_engine(
       "mysql+pymysql://layth79:@localhost/sailors?host=localhost", echo=True)
 
@@ -59,6 +96,7 @@ Base.metadata.create_all(engine)
 conn = engine.connect()
 
 Session = sessionmaker(bind=engine)
+# part 2 tests
 session = Session()
 
 def test1():
@@ -121,3 +159,33 @@ def test8():
             (SELECT S.sid, S.sname, B.bid, COUNT(*) AS numRes FROM sailors S, reserves R, boats B \
                 WHERE B.bid = R.bid AND S.sid = R.sid GROUP BY B.bid, S.sid) AS tmp1) AS tmp2 WHERE ranking = 1").fetchall()
     assert orm_q == sql_q
+
+session.close()
+
+# # part 3 tests
+session = Session()
+
+def test9():
+    # counts the number of employees
+    orm_q = session.query(func.count(Employee.eid)).scalar()
+    assert orm_q == 7
+
+def test10():
+    # finds the employee with the highest hourly pay
+    sub = session.query(func.max(Salary.hourlypay)).scalar()
+    orm_q = session.query(Salary.eid).filter(Salary.hourlypay == sub).scalar()
+    assert orm_q == 204
+
+def test11():
+    # finds all employees who live in Greenport
+    orm_q = session.query(Address.eid).filter(Address.city == 'greenport').all()
+    correct = [204, 206]
+    assert all(correct[i] == tmp[0] for i, tmp in enumerate(orm_q))
+
+def test12():
+    # computes how much business owes each employee for the week
+    orm_q = session.query(Salary.eid, Salary.weeklyhrs * Salary.hourlypay + Salary.overtimehrs * Salary.overtimepay).all()
+    correct = [(200, 700), (201, 640), (202, 1000), (203, 1750), (204, 2325), (205, 300), (206, 750)]
+    assert all(correct[i] == tmp for i, tmp in enumerate(orm_q))
+
+session.close()

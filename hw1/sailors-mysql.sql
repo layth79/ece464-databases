@@ -12,15 +12,63 @@ create table reserves(
     sid int,
     bid int,
     day date,
-	PRIMARY KEY (sid, bid, day)
+    PRIMARY KEY (sid, bid, day)
 );
 
 create table boats(
     bid int PRIMARY KEY,
-	bname char(20),
-	color char(10),
-	length int
+    bname char(20),
+    color char(10),
+    length int
 );
+
+create table employees(
+    eid int PRIMARY KEY,
+    ename varchar(30),
+    job varchar(30)
+);
+
+create table addresses(
+    aid int PRIMARY KEY,
+    eid int,
+    zip int,
+    line1 varchar(30),
+    line2 varchar(30),
+    city varchar(20)
+);
+
+create table salaries(
+    salid int PRIMARY KEY,
+    eid int,
+    weeklyhrs int,
+    hourlypay int,
+    overtimehrs int,
+    overtimepay int
+);
+
+insert into employees values (200, 'john', 'cleaner');
+insert into employees values (201, 'andy', 'cleaner');
+insert into employees values (202, 'carl', 'repairman');
+insert into employees values (203, 'benedict', 'repairman');
+insert into employees values (204, 'juan', 'accountant');
+insert into employees values (205, 'trevor', 'driver');
+insert into employees values (206, 'james', 'driver');
+
+insert into addresses values (300, 200, 11365, '40 henry smith ave', NULL, 'fresh meadows');
+insert into addresses values (301, 201, 11463, '7948 randall road', NULL, 'garden city');
+insert into addresses values (302, 202, 11712, '65 arcadia lane', '4th floor', 'port jefferson');
+insert into addresses values (303, 203, 11125, '40 henry smith ave', NULL, 'hempstead');
+insert into addresses values (304, 204, 11298, '6 inverness dr', '2nd floor', 'greenport');
+insert into addresses values (305, 205, 11445, '94 york st', '3rd floor', 'fresh meadows');
+insert into addresses values (306, 206, 11268, '7 sycamore ave', NULL, 'greenport');
+
+insert into salaries values (400, 200, 40, 15, 5, 20);
+insert into salaries values (401, 201, 40, 15, 2, 20);
+insert into salaries values (402, 202, 40, 25, 0, 35);
+insert into salaries values (403, 203, 50, 35, 0, 50);
+insert into salaries values (404, 204, 45, 45, 5, 60);
+insert into salaries values (405, 205, 20, 15, 0, 20);
+insert into salaries values (406, 206, 50, 15, 0, 20);
 
 insert into sailors values (22,'dusting',7,45);
 insert into sailors values (29,'brutus',1,33);
