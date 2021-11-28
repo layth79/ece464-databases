@@ -1,0 +1,166 @@
+Query 1: Top 10 all-time total points scored
+
+Rank 1 : Kareem Abdul-Jabbar 38387 career points
+Rank 2 : Karl Malone 36928 career points
+Rank 3 : LeBron James 35618 career points
+Rank 4 : Kobe Bryant 33643 career points
+Rank 5 : Michael Jordan 32292 career points
+Rank 6 : Dirk Nowitzki 31560 career points
+Rank 7 : Wilt Chamberlain 31419 career points
+Rank 8 : Shaquille O'Neal 28596 career points
+Rank 9 : Carmelo Anthony 27686 career points
+Rank 10 : Moses Malone 27409 career points
+
+
+Query 2: Top 10 all-time points per game
+
+Rank 1 : Michael Jordan 30.123 points per game
+Rank 2 : Wilt Chamberlain 30.066 points per game
+Rank 3 : Elgin Baylor 27.362 points per game
+Rank 4 : Kevin Durant 27.05 points per game
+Rank 5 : Jerry West 27.03 points per game
+Rank 6 : LeBron James 26.983 points per game
+Rank 7 : Allen Iverson 26.66 points per game
+Rank 8 : Bob Pettit 26.363 points per game
+Rank 9 : George Gervin 26.179 points per game
+Rank 10 : Oscar Robertson 25.682 points per game
+
+
+Query 3: Top 10 field goal percentage
+
+Rank 1 : DeAndre Jordan 67.4%
+Rank 2 : Rudy Gobert 64.8%
+Rank 3 : Clint Capela 62.4%
+Rank 4 : Montrezl Harrell 61.7%
+Rank 5 : Brandan Wright 60.7%
+Rank 6 : Artis Gilmore 59.9%
+Rank 7 : Tyson Chandler 59.7%
+Rank 8 : Andris Biedrins 59.4%
+Rank 9 : Steven Adams 58.8%
+Rank 10 : Dwight Howard 58.7%
+
+
+Query 4: Effective field goal percentage of 10 players with most 3-pointers made
+
+Rank 1 : Ray Allen efg% - 53.0%, fg% - 45.2%
+Rank 2 : Stephen Curry efg% - 58.4%, fg% - 47.6%
+Rank 3 : Reggie Miller efg% - 54.4%, fg% - 47.1%
+Rank 4 : James Harden efg% - 52.7%, fg% - 44.4%
+Rank 5 : Kyle Korver efg% - 57.4%, fg% - 44.2%
+Rank 6 : Vince Carter efg% - 48.9%, fg% - 43.5%
+Rank 7 : Jason Terry efg% - 51.7%, fg% - 44.4%
+Rank 8 : Jamal Crawford efg% - 47.7%, fg% - 41.0%
+Rank 9 : Paul Pierce efg% - 50.0%, fg% - 44.5%
+Rank 10 : Damian Lillard efg% - 51.9%, fg% - 43.8%
+
+
+Query 5: Field goal percentage of 10 players with least 3-pointers made
+
+Rank 1 : Oscar Robertson 48.5%
+Rank 2 : Walt Bellamy 51.6%
+Rank 3 : Bob Pettit 43.6%
+Rank 4 : Jerry West 47.4%
+Rank 5 : John Havlicek 43.9%
+Rank 6 : Elgin Baylor 43.1%
+Rank 7 : Chet Walker 47.0%
+Rank 8 : Gail Goodrich 45.6%
+Rank 9 : Hal Greer 45.2%
+Rank 10 : Wilt Chamberlain 54.0%
+
+
+Query 6: Top 10 highest 3-pointers made and their 3-point field goal percentage
+
+Rank 1 : Ray Allen 3pm - 2973, 3p% - 40.0%
+Rank 2 : Stephen Curry 3pm - 2930, 3p% - 43.2%
+Rank 3 : Reggie Miller 3pm - 2560, 3p% - 39.5%
+Rank 4 : James Harden 3pm - 2499, 3p% - 36.3%
+Rank 5 : Kyle Korver 3pm - 2450, 3p% - 42.9%
+Rank 6 : Vince Carter 3pm - 2290, 3p% - 37.1%
+Rank 7 : Jason Terry 3pm - 2282, 3p% - 38.0%
+Rank 8 : Jamal Crawford 3pm - 2221, 3p% - 34.8%
+Rank 9 : Paul Pierce 3pm - 2143, 3p% - 36.8%
+Rank 10 : Damian Lillard 3pm - 2105, 3p% - 37.3%
+
+
+Query 7: Top 10 all-time blocks per game and their rebounds per game
+
+Rank 1 : Mark Eaton bpg - 3.501, rpg - 7.93
+Rank 2 : Manute Bol bpg - 3.342, rpg - 4.241
+Rank 3 : Hakeem Olajuwon bpg - 3.093, rpg - 11.105
+Rank 4 : David Robinson bpg - 2.992, rpg - 10.635
+Rank 5 : Alonzo Mourning bpg - 2.811, rpg - 8.516
+Rank 6 : Dikembe Mutombo bpg - 2.75, rpg - 10.333
+Rank 7 : Shawn Bradley bpg - 2.546, rpg - 6.331
+Rank 8 : Patrick Ewing bpg - 2.446, rpg - 9.811
+Rank 9 : Theo Ratliff bpg - 2.429, rpg - 5.674
+Rank 10 : Marcus Camby bpg - 2.395, rpg - 9.776
+
+
+Query 8: Top 10 all-time rebounds per game
+
+Rank 1 : Wilt Chamberlain 22.893 rebounds per game
+Rank 2 : Bill Russell 22.45 rebounds per game
+Rank 3 : Bob Pettit 16.223 rebounds per game
+Rank 4 : Jerry Lucas 15.611 rebounds per game
+Rank 5 : Nate Thurmond 15.004 rebounds per game
+Rank 6 : Wes Unseld 13.992 rebounds per game
+Rank 7 : Walt Bellamy 13.653 rebounds per game
+Rank 8 : Dave Cowens 13.634 rebounds per game
+Rank 9 : Andre Drummond 13.618 rebounds per game
+Rank 10 : Elgin Baylor 13.549 rebounds per game
+
+
+Query 9: Top 10 all-time assists per game and their turnovers per game
+
+Rank 1 : Magic Johnson apg - 11.193, tpg - 3.869
+Rank 2 : John Stockton apg - 10.509, tpg - 2.821
+Rank 3 : Oscar Robertson apg - 9.506, tpg - None
+Rank 4 : Chris Paul apg - 9.438, tpg - 2.402
+Rank 5 : Isiah Thomas apg - 9.255, tpg - 3.76
+Rank 6 : Kevin Johnson apg - 9.13, tpg - 3.072
+Rank 7 : John Wall apg - 9.065, tpg - 3.804
+Rank 8 : Jason Kidd apg - 8.692, tpg - 2.877
+Rank 9 : Russell Westbrook apg - 8.55, tpg - 4.143
+Rank 10 : Steve Nash apg - 8.492, tpg - 2.857
+
+
+Query 10: Top 10 all-time turnovers per game
+
+Rank 1 : Russell Westbrook 4.143 turnovers per game
+Rank 2 : Magic Johnson 3.869 turnovers per game
+Rank 3 : John Wall 3.804 turnovers per game
+Rank 4 : Isiah Thomas 3.76 turnovers per game
+Rank 5 : James Harden 3.74 turnovers per game
+Rank 6 : Allen Iverson 3.568 turnovers per game
+Rank 7 : Steve Francis 3.524 turnovers per game
+Rank 8 : LeBron James 3.508 turnovers per game
+Rank 9 : DeMarcus Cousins 3.405 turnovers per game
+Rank 10 : Reggie Theus 3.404 turnovers per game
+
+
+Query 11: Top 10 free throw percentage and their 3-point percentage
+
+Rank 1 : Stephen Curry ft% - 90.8%, 3p% - 43.2%
+Rank 2 : Mahmoud Abdul-Rauf ft% - 90.5%, 3p% - 35.4%
+Rank 3 : Mark Price ft% - 90.4%, 3p% - 40.2%
+Rank 4 : Steve Nash ft% - 90.4%, 3p% - 42.8%
+Rank 5 : Rick Barry ft% - 90.0%, 3p% - 33.0%
+Rank 6 : Peja Stojakovic ft% - 89.5%, 3p% - 40.1%
+Rank 7 : Damian Lillard ft% - 89.4%, 3p% - 37.3%
+Rank 8 : Ray Allen ft% - 89.4%, 3p% - 40.0%
+Rank 9 : Chauncey Billups ft% - 89.4%, 3p% - 38.7%
+Rank 10 : JJ Redick ft% - 89.2%, 3p% - 41.5%
+
+
+Query 12: Top 10 all-time minutes per game
+
+Rank 1 : Wilt Chamberlain 45.798 minutes per game
+Rank 2 : Bill Russell 42.29 minutes per game
+Rank 3 : Oscar Robertson 42.198 minutes per game
+Rank 4 : Allen Iverson 41.118 minutes per game
+Rank 5 : Elgin Baylor 40.027 minutes per game
+Rank 6 : Jerry West 39.239 minutes per game
+Rank 7 : Jerry Lucas 38.758 minutes per game
+Rank 8 : Bob Pettit 38.75 minutes per game
+Rank 9 : Latrell Sprewell 38.628 minutes per game
+Rank 10 : Dave Cowens 38.596 minutes per game
