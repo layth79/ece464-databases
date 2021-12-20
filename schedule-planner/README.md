@@ -1,14 +1,12 @@
 # User-Interfaces
 
-This project aims to create a planner web application to be used by varying EE Students at The Cooper Union. The goal was 
-to create a program that would help us keep track of the changing coursework and projects that would be assigned to us throughout the semester
+This project is a planner web application that keeps track of coursework such as problem sets, exams, projects, meetings, etc. What is unique about this planner it is shared between multiple users, where if one user uploads an assignment, all users see that assignment (if the uploader did not mark the assignment as private). Me and a couple of friends created this web app to use for our courses since we take very similar courses since we are all interested in software development. The goal is to spread it's use to other students at Cooper Union and beyond.
 
-
-### Not yet deployed: to run, source the virtual environment with the following command
+### It still has not been deployed. To run, source the virtual environment with the following command:
 
 source scheduler-env/bin/activate 
 
-### Set the environment variable and run 
+### Set the environment variable and run:
 
 export FLASK_APP=backend
 
