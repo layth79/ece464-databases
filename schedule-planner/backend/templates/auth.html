@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Authentication{% endblock %}
+
+{% block head %}
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/authstyle.css') }}">
+{% endblock %}
+
+
+{% block content %}
+
+<body id="container">
+  <form action="/login" method="POST">
+  
+  <fieldset>
+    
+    <legend class="sign">Sign In</legend>
+    
+    <label for="username" class="vhide">Username</label>
+    <input id="username" name="username" type="text" placeholder="Username" required>
+    
+    <label for="password" class="vhide">Password</label>
+    <input id="password" name="password" type="password" placeholder="Password" required>
+    <button class="signin" type="submit">Submit</button>
+    
+  </fieldset>
+  
+</form> 
+</body>
+{% endblock %}
